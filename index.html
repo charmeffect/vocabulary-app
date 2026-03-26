@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Master</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #021a18, #0a3d38, #0d2924);
+            min-height: 100vh;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header { text-align: center; padding: 30px 20px 10px; }
+
+        header h1 {
+            font-size: 2rem;
+            background: linear-gradient(90deg, #14b8a6, #5eead4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        header p { color: #aaa; font-size: 0.95rem; }
+
+        .stats-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 10px 0 5px;
+            font-size: 0.82rem;
+        }
+
+        .stats-row span {
+            background: rgba(255,255,255,0.08);
+            padding: 5px 14px;
+            border-radius: 18px;
+        }
+
+        .score-bar {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 8px 0;
+            font-size: 0.9rem;
+        }
+
+        .score-bar span {
+            background: rgba(255,255,255,0.1);
+            padding: 6px 16px;
+            border-radius: 20px;
+        }
+
+        .score-bar .correct { color: #4caf50; }
+        .score-bar .wrong { color: #f44336; }
+        .score-bar .total { color: #14b8a6; }
+
+        .progress-bar {
+            width: 90%; max-width: 600px; height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px; margin: 0 auto 15px; overflow: hidden;
+        }
+
+        .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0d9488, #5eead4);
+            border-radius: 3px; transition: width 0.4s ease;
+        }
+
+        /* ===== MOTHER CATEGORY TABS ===== */
+        .mother-tabs {
+            display: flex; gap: 6px;
+            justify-content: center; margin: 8px 0 6px;
+            flex-wrap: wrap;
+        }
+
+        .mother-tab {
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.12);
+            color: #999; padding: 8px 20px;
+            border-radius: 20px; font-size: 0.85rem;
+            cursor: pointer; transition: all 0.25s;
+            font-weight: 600; letter-spacing: 0.3px;
+        }
+
+        .mother-tab:hover {
+            background: rgba(255,255,255,0.1);
+            color: #ccc;
+        }
+
+        .mother-tab.active {
+            background: linear-gradient(135deg, rgba(13,148,136,0.3), rgba(94,234,212,0.2));
+            border-color: #14b8a6;
+            color: #14b8a6;
+        }
+
+        .mother-tab .tab-icon { margin-right: 5px; }
+
+        /* ===== SUB PANEL ===== */
+        .sub-panel {
+            display: none;
+            width: 90%; max-width: 600px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 14px;
+            margin: 4px auto 10px;
+            animation: fadeSlide 0.3s ease;
+        }
+
+        .sub-panel.visible { display: block; }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sub-panel-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        /* Type chips (Part of Speech) */
+        .type-chips {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            justify-content: center;
+        }
+
+        .type-chip {
+            background: rgba(13,148,136,0.08);
+            border: 1px solid rgba(13,148,136,0.2);
+            color: #5eead4; padding: 8px 16px;
+            border-radius: 14px; font-size: 0.82rem;
+            cursor: pointer; transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .type-chip:hover {
+            background: rgba(13,148,136,0.2);
+            border-color: #14b8a6; color: #fff;
+        }
+
+        .type-chip.active {
+            background: rgba(13,148,136,0.3);
+            border-color: #14b8a6; color: #fff;
+        }
+
+        /* Topic chips (Category) */
+        .topic-chips {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            justify-content: center;
+        }
+
+        .topic-chip {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #aaa; padding: 8px 18px;
+            border-radius: 14px; font-size: 0.82rem;
+            cursor: pointer; transition: all 0.2s;
+        }
+
+        .topic-chip:hover {
+            background: rgba(94,234,212,0.25);
+            border-color: #5eead4; color: #fff;
+        }
+
+        .topic-chip.active {
+            background: rgba(94,234,212,0.3);
+            border-color: #5eead4; color: #fff;
+        }
+
+        /* Level chips */
+        .level-chips {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            justify-content: center;
+        }
+
+        .level-chip {
+            background: rgba(255,255,255,0.08);
+            border: 2px solid rgba(255,255,255,0.15);
+            color: #aaa; padding: 10px 18px;
+            border-radius: 14px; font-size: 0.82rem;
+            cursor: pointer; transition: all 0.25s;
+            font-weight: 600;
+        }
+
+        .level-chip:hover {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+        }
+
+        .level-chip.active { color: #fff; }
+
+        .level-chip.active[data-level="all"] {
+            background: rgba(13,148,136,0.3);
+            border-color: #14b8a6;
+        }
+
+        .level-chip.active[data-level="elementary"] {
+            background: rgba(76,175,80,0.3);
+            border-color: #4caf50;
+        }
+
+        .level-chip.active[data-level="middle"] {
+            background: rgba(33,150,243,0.3);
+            border-color: #2196f3;
+        }
+
+        .level-chip.active[data-level="high"] {
+            background: rgba(255,152,0,0.3);
+            border-color: #ff9800;
+        }
+
+        .level-chip.active[data-level="college"] {
+            background: rgba(156,39,176,0.3);
+            border-color: #9c27b0;
+        }
+
+        .level-chip.active[data-level="professional"] {
+            background: rgba(244,67,54,0.3);
+            border-color: #f44336;
+        }
+
+        .level-count {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        /* Level badge on question card */
+        .level-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-left: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .level-badge.elementary { background: rgba(76,175,80,0.25); color: #4caf50; }
+        .level-badge.middle { background: rgba(33,150,243,0.25); color: #64b5f6; }
+        .level-badge.high { background: rgba(255,152,0,0.25); color: #ffb74d; }
+        .level-badge.college { background: rgba(156,39,176,0.25); color: #ce93d8; }
+        .level-badge.professional { background: rgba(244,67,54,0.25); color: #ef9a9a; }
+
+        /* Type badge on question card */
+        .type-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-left: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(13,148,136,0.2);
+            color: #14b8a6;
+        }
+
+        /* Weak Words panel */
+        .weak-info {
+            text-align: center;
+            color: #888; font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .weak-info .weak-count {
+            color: #f44336; font-weight: 700; font-size: 1.3rem;
+        }
+
+        .weak-list {
+            display: flex; flex-wrap: wrap; gap: 6px;
+            justify-content: center; margin-top: 10px;
+            max-height: 120px; overflow-y: auto;
+        }
+
+        .weak-tag {
+            background: rgba(244, 67, 54, 0.15);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            color: #f88; padding: 3px 10px;
+            border-radius: 10px; font-size: 0.73rem;
+        }
+
+        .weak-tag .weak-score {
+            color: #f44336; font-weight: 700; margin-left: 4px;
+        }
+
+        /* ===== SIZE BAR ===== */
+        .size-bar {
+            display: flex; gap: 8px;
+            justify-content: center; margin-bottom: 15px;
+        }
+
+        .size-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #aaa; padding: 5px 14px;
+            border-radius: 15px; font-size: 0.8rem;
+            cursor: pointer; transition: all 0.2s;
+        }
+
+        .size-btn:hover, .size-btn.active {
+            background: rgba(147, 51, 234, 0.3);
+            border-color: #9333ea; color: #fff;
+        }
+
+        /* ===== QUIZ CARD ===== */
+        .card {
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 35px 30px;
+            width: 90%; max-width: 600px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover { transform: translateY(-2px); }
+
+        .category-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 4px 14px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: #ccc;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sentence {
+            font-size: 1.35rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #e0e0e0;
+        }
+
+        .sentence .blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 3px dashed #5eead4;
+            margin: 0 4px;
+            padding: 2px 8px;
+            color: #5eead4;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .sentence .blank.filled {
+            border-bottom-style: solid;
+            border-bottom-color: #4caf50;
+        }
+
+        .sentence .blank.wrong-fill {
+            border-bottom-style: solid;
+            border-bottom-color: #f44336;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .option-btn {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: rgba(13,148,136,0.3);
+            border-color: #14b8a6;
+            transform: scale(1.05);
+        }
+
+        .option-btn:disabled { cursor: default; opacity: 0.5; }
+
+        .option-btn.selected-correct {
+            background: rgba(76, 175, 80, 0.3);
+            border-color: #4caf50; color: #4caf50;
+        }
+
+        .option-btn.selected-wrong {
+            background: rgba(244, 67, 54, 0.3);
+            border-color: #f44336; color: #f44336;
+        }
+
+        .option-btn.highlight-correct {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4caf50; color: #4caf50;
+        }
+
+        /* Phrase score badge on question card */
+        .phrase-score-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .phrase-score-badge.negative {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f88;
+        }
+
+        .phrase-score-badge.positive {
+            background: rgba(76, 175, 80, 0.2);
+            color: #8f8;
+        }
+
+        .phrase-score-badge.neutral {
+            background: rgba(255,255,255,0.08);
+            color: #888;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 14px;
+            display: none;
+            text-align: left;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback.correct {
+            background: rgba(76, 175, 80, 0.15);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            display: block;
+        }
+
+        .feedback.wrong {
+            background: rgba(244, 67, 54, 0.15);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            display: block;
+        }
+
+        .feedback h3 { margin-bottom: 8px; font-size: 1.1rem; }
+
+        .feedback .phrase-title {
+            color: #14b8a6; font-weight: 700;
+            font-size: 1.15rem; margin-bottom: 6px;
+        }
+
+        .feedback .meaning {
+            color: #ccc; line-height: 1.6; font-size: 0.95rem;
+        }
+
+        .feedback .example {
+            margin-top: 10px;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            color: #bbb;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .feedback .score-change {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .feedback .score-change .delta-neg { color: #f44336; font-weight: 700; }
+        .feedback .score-change .delta-pos { color: #4caf50; font-weight: 700; }
+
+        .next-btn {
+            margin-top: 25px;
+            background: linear-gradient(90deg, #0d9488, #5eead4);
+            border: none; color: #021a18;
+            padding: 12px 40px; border-radius: 12px;
+            font-size: 1rem; font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: none;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(13, 148, 136, 0.4);
+        }
+
+        .results-card { display: none; text-align: center; }
+
+        .results-card h2 {
+            font-size: 1.8rem; margin-bottom: 15px; color: #14b8a6;
+        }
+
+        .results-card .stats {
+            font-size: 1.1rem; color: #ccc; line-height: 2;
+        }
+
+        .results-card .restart-btn {
+            margin-top: 25px;
+            background: linear-gradient(90deg, #0d9488, #5eead4);
+            border: none; color: #021a18;
+            padding: 14px 45px; border-radius: 12px;
+            font-size: 1.05rem; font-weight: 700;
+            cursor: pointer; transition: transform 0.2s;
+        }
+
+        .results-card .restart-btn:hover { transform: scale(1.05); }
+
+        .review-section {
+            margin-top: 20px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .review-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .review-item.was-correct {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 3px solid #4caf50;
+        }
+
+        .review-item.was-wrong {
+            background: rgba(244, 67, 54, 0.1);
+            border-left: 3px solid #f44336;
+        }
+
+        .review-item .ri-phrase { color: #14b8a6; font-weight: 700; }
+        .review-item .ri-score { font-size: 0.75rem; margin-left: 6px; }
+        .review-item .ri-sentence { color: #aaa; font-size: 0.85rem; margin-top: 4px; }
+
+        /* History summary on results page */
+        .history-summary {
+            margin-top: 16px;
+            padding: 14px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .history-summary h4 {
+            color: #f44336; font-size: 0.9rem; margin-bottom: 8px;
+        }
+
+        .history-summary .weak-phrase-list {
+            display: flex; flex-wrap: wrap; gap: 6px;
+            justify-content: center;
+        }
+
+        .history-summary .weak-phrase-item {
+            background: rgba(244,67,54,0.12);
+            border: 1px solid rgba(244,67,54,0.25);
+            padding: 4px 10px; border-radius: 10px;
+            font-size: 0.75rem; color: #f88;
+        }
+
+        .history-summary .weak-phrase-item .wps {
+            color: #f44336; font-weight: 700;
+        }
+
+        footer {
+            margin-top: auto; padding: 20px;
+            color: #555; font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Vocabulary Master</h1>
+    <p>Choose the correct word to complete the sentence</p>
+</header>
+
+<div class="stats-row" id="statsRow">
+    <span id="totalPhrases" style="color:#5eead4;">Words: 0</span>
+    <span id="totalSentences" style="color:#14b8a6;">Sentences: 0</span>
+    <span id="weakCount" style="color:#f44336;">Weak: 0</span>
+</div>
+
+<div class="score-bar">
+    <span class="correct" id="correctCount">Correct: 0</span>
+    <span class="wrong" id="wrongCount">Wrong: 0</span>
+    <span class="total" id="questionNum">1 / 10</span>
+</div>
+
+<div class="progress-bar">
+    <div class="fill" id="progressFill" style="width: 0%"></div>
+</div>
+
+<!-- MOTHER CATEGORY TABS -->
+<div class="mother-tabs" id="motherTabs">
+    <button class="mother-tab active" data-mode="all">
+        <span class="tab-icon">&#9679;</span>All
+    </button>
+    <button class="mother-tab" data-mode="type">
+        <span class="tab-icon">&#9998;</span>By Part of Speech
+    </button>
+    <button class="mother-tab" data-mode="topic">
+        <span class="tab-icon">&#9881;</span>By Category
+    </button>
+    <button class="mother-tab" data-mode="level">
+        <span class="tab-icon">&#9733;</span>By Level
+    </button>
+    <button class="mother-tab" data-mode="weak">
+        <span class="tab-icon">&#9888;</span>Weak Words
+    </button>
+</div>
+
+<!-- SUB PANELS -->
+<div class="sub-panel" id="panelType">
+    <div class="sub-panel-label">Choose a part of speech</div>
+    <div class="type-chips" id="typeChips">
+        <button class="type-chip active" data-type="all">All</button>
+        <button class="type-chip" data-type="noun">Noun</button>
+        <button class="type-chip" data-type="verb">Verb</button>
+        <button class="type-chip" data-type="adjective">Adjective</button>
+        <button class="type-chip" data-type="adverb">Adverb</button>
+    </div>
+</div>
+
+<div class="sub-panel" id="panelTopic">
+    <div class="sub-panel-label">Choose a category</div>
+    <div class="topic-chips" id="topicChips">
+        <button class="topic-chip active" data-topic="all">All Categories</button>
+        <button class="topic-chip" data-topic="academic">Academic</button>
+        <button class="topic-chip" data-topic="business">Business</button>
+        <button class="topic-chip" data-topic="science">Science</button>
+        <button class="topic-chip" data-topic="technology">Technology</button>
+        <button class="topic-chip" data-topic="law">Law</button>
+        <button class="topic-chip" data-topic="medicine">Medicine</button>
+        <button class="topic-chip" data-topic="psychology">Psychology</button>
+        <button class="topic-chip" data-topic="politics">Politics</button>
+        <button class="topic-chip" data-topic="arts">Arts</button>
+        <button class="topic-chip" data-topic="philosophy">Philosophy</button>
+        <button class="topic-chip" data-topic="social">Social</button>
+        <button class="topic-chip" data-topic="emotion">Emotion</button>
+        <button class="topic-chip" data-topic="character">Character</button>
+        <button class="topic-chip" data-topic="communication">Communication</button>
+        <button class="topic-chip" data-topic="nature">Nature</button>
+        <button class="topic-chip" data-topic="daily">Daily</button>
+    </div>
+</div>
+
+<div class="sub-panel" id="panelLevel">
+    <div class="sub-panel-label">Choose a difficulty level</div>
+    <div class="level-chips" id="levelChips">
+        <button class="level-chip active" data-level="all">All Levels</button>
+        <button class="level-chip" data-level="elementary" data-color="#4caf50">Elementary<span class="level-count" id="countElementary"></span></button>
+        <button class="level-chip" data-level="middle" data-color="#2196f3">Middle School<span class="level-count" id="countMiddle"></span></button>
+        <button class="level-chip" data-level="high" data-color="#ff9800">High School<span class="level-count" id="countHigh"></span></button>
+        <button class="level-chip" data-level="college" data-color="#9c27b0">College<span class="level-count" id="countCollege"></span></button>
+        <button class="level-chip" data-level="professional" data-color="#f44336">Professional<span class="level-count" id="countProfessional"></span></button>
+    </div>
+</div>
+
+<div class="sub-panel" id="panelWeak">
+    <div class="weak-info" id="weakInfo">
+        <div>You have <span class="weak-count" id="weakCountDisplay">0</span> weak words</div>
+        <div style="font-size:0.75rem; color:#666; margin-top:4px;">Wrong answers get -1. Correct answers recover +1 (only when negative).</div>
+    </div>
+    <div class="weak-list" id="weakList"></div>
+</div>
+
+<!-- QUIZ SIZE -->
+<div class="size-bar" id="sizeBar">
+    <button class="size-btn" data-size="10">10 Qs</button>
+    <button class="size-btn active" data-size="15">15 Qs</button>
+    <button class="size-btn" data-size="20">20 Qs</button>
+    <button class="size-btn" data-size="30">30 Qs</button>
+    <button class="size-btn" data-size="50">50 Qs</button>
+</div>
+
+<div class="card" id="quizCard">
+    <div class="category-tag" id="categoryTag">academic</div>
+
+    <div class="sentence" id="sentenceDisplay"></div>
+
+    <div class="options" id="optionsContainer"></div>
+
+    <div class="feedback" id="feedback">
+        <div class="phrase-title" id="phraseTitle"></div>
+        <div class="meaning" id="phraseMeaning"></div>
+        <div class="example" id="phraseExample"></div>
+        <div class="score-change" id="scoreChange"></div>
+    </div>
+
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+</div>
+
+<div class="card results-card" id="resultsCard">
+    <h2>Quiz Complete!</h2>
+    <div class="stats" id="resultsStats"></div>
+    <div class="history-summary" id="historySummary"></div>
+    <div class="review-section" id="reviewSection"></div>
+    <button class="restart-btn" onclick="restartQuiz()" style="margin-top:25px;">Play Again</button>
+</div>
+
+<footer>Vocabulary Master &mdash; Learn English Vocabulary</footer>
+
+<script src="data.js"></script>
+<script>
+// ============================
+// STATE
+// ============================
+let currentQuestions = [];
+let currentIndex = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let quizSize = 15;
+let answered = false;
+let selectedTopic = "all";
+let selectedType = "all";
+let selectedMode = "all"; // all | type | topic | level | weak
+let selectedLevel = "all";
+let reviewLog = [];
+
+// ============================
+// PHRASE SCORES (localStorage)
+// ============================
+const STORAGE_KEY = "vocab_phrase_scores";
+
+function loadScores() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch { return {}; }
+}
+
+function saveScores(scores) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
+}
+
+function getScore(word) {
+    return loadScores()[word] || 0;
+}
+
+function recordAnswer(word, isCorrect) {
+    const scores = loadScores();
+    const current = scores[word] || 0;
+    if (!isCorrect) {
+        scores[word] = current - 1;
+    } else if (current < 0) {
+        scores[word] = current + 1;
+    }
+    saveScores(scores);
+    return scores[word] || 0;
+}
+
+function getWeakPhrases() {
+    const scores = loadScores();
+    return Object.entries(scores)
+        .filter(([, s]) => s < 0)
+        .sort((a, b) => a[1] - b[1]);
+}
+
+// ============================
+// STATS
+// ============================
+function countStats() {
+    const totalWords = VOCABULARY.length;
+    const totalSentences = VOCABULARY.reduce((sum, v) => sum + v.sentences.length, 0);
+    document.getElementById("totalPhrases").textContent = `Words: ${totalWords}`;
+    document.getElementById("totalSentences").textContent = `Sentences: ${totalSentences}`;
+    updateWeakCount();
+}
+
+function updateWeakCount() {
+    const weak = getWeakPhrases();
+    document.getElementById("weakCount").textContent = `Weak: ${weak.length}`;
+}
+
+// ============================
+// MOTHER TABS
+// ============================
+function initMotherTabs() {
+    document.querySelectorAll(".mother-tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+            document.querySelectorAll(".mother-tab").forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            selectedMode = tab.dataset.mode;
+
+            // Reset sub-filters
+            selectedTopic = "all";
+            selectedType = "all";
+            selectedLevel = "all";
+
+            // Show/hide panels
+            document.getElementById("panelType").classList.toggle("visible", selectedMode === "type");
+            document.getElementById("panelTopic").classList.toggle("visible", selectedMode === "topic");
+            document.getElementById("panelLevel").classList.toggle("visible", selectedMode === "level");
+            document.getElementById("panelWeak").classList.toggle("visible", selectedMode === "weak");
+
+            if (selectedMode === "level") {
+                document.querySelectorAll(".level-chip").forEach(b => b.classList.remove("active"));
+                document.querySelector('.level-chip[data-level="all"]').classList.add("active");
+                updateLevelCounts();
+            }
+            if (selectedMode === "weak") {
+                renderWeakPanel();
+            }
+            if (selectedMode === "type") {
+                document.querySelectorAll(".type-chip").forEach(b => b.classList.remove("active"));
+                document.querySelector('.type-chip[data-type="all"]').classList.add("active");
+                updateTypeCounts();
+            }
+            if (selectedMode === "topic") {
+                document.querySelectorAll(".topic-chip").forEach(b => b.classList.remove("active"));
+                document.querySelector('.topic-chip[data-topic="all"]').classList.add("active");
+                updateTopicCounts();
+            }
+
+            startQuiz();
+        });
+    });
+}
+
+// ============================
+// BY PART OF SPEECH (Type)
+// ============================
+function initTypeChips() {
+    document.querySelectorAll(".type-chip").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".type-chip").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            selectedType = btn.dataset.type;
+            startQuiz();
+        });
+    });
+    updateTypeCounts();
+}
+
+function updateTypeCounts() {
+    const types = ["noun", "verb", "adjective", "adverb"];
+    types.forEach(t => {
+        const count = VOCABULARY.filter(v => v.pos === t).length;
+        const chip = document.querySelector(`.type-chip[data-type="${t}"]`);
+        if (chip) {
+            const label = chip.textContent.replace(/\s*\(\d+\)/, "");
+            chip.textContent = `${label} (${count})`;
+        }
+    });
+}
+
+// ============================
+// BY CATEGORY (Topic)
+// ============================
+function initTopicChips() {
+    document.querySelectorAll(".topic-chip").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".topic-chip").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            selectedTopic = btn.dataset.topic;
+            startQuiz();
+        });
+    });
+    updateTopicCounts();
+}
+
+function updateTopicCounts() {
+    const topics = ["academic", "business", "science", "technology", "law", "medicine", "psychology", "politics", "arts", "philosophy", "social", "emotion", "character", "communication", "nature", "daily"];
+    topics.forEach(t => {
+        const count = VOCABULARY.filter(v => v.category === t).length;
+        const chip = document.querySelector(`.topic-chip[data-topic="${t}"]`);
+        if (chip) {
+            const label = chip.textContent.replace(/\s*\(\d+\)/, "");
+            chip.textContent = `${label} (${count})`;
+        }
+    });
+}
+
+// ============================
+// WEAK WORDS PANEL
+// ============================
+function renderWeakPanel() {
+    const weak = getWeakPhrases();
+    document.getElementById("weakCountDisplay").textContent = weak.length;
+
+    const list = document.getElementById("weakList");
+    list.innerHTML = "";
+
+    if (weak.length === 0) {
+        list.innerHTML = '<div style="color:#666; font-size:0.8rem; padding:8px;">No weak words yet. Keep practicing!</div>';
+        return;
+    }
+
+    weak.forEach(([word, score]) => {
+        const tag = document.createElement("span");
+        tag.className = "weak-tag";
+        tag.innerHTML = `${word}<span class="weak-score">${score}</span>`;
+        list.appendChild(tag);
+    });
+}
+
+// ============================
+// SHUFFLE
+// ============================
+function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+// ============================
+// BUILD QUIZ POOL
+// ============================
+function buildQuizPool() {
+    let pool = VOCABULARY;
+
+    if (selectedMode === "weak") {
+        const weak = getWeakPhrases();
+        const weakSet = new Set(weak.map(([word]) => word));
+        pool = pool.filter(v => weakSet.has(v.word));
+        if (pool.length === 0) pool = [...VOCABULARY];
+    } else if (selectedMode === "type") {
+        if (selectedType !== "all") {
+            pool = pool.filter(v => v.pos === selectedType);
+        }
+    } else if (selectedMode === "topic") {
+        if (selectedTopic !== "all") {
+            pool = pool.filter(v => v.category === selectedTopic);
+        }
+    } else if (selectedMode === "level") {
+        if (selectedLevel !== "all") {
+            pool = pool.filter(v => v.level === selectedLevel);
+        }
+    }
+
+    if (pool.length === 0) pool = [...VOCABULARY];
+
+    return pool.map(v => {
+        const sentenceIdx = Math.floor(Math.random() * v.sentences.length);
+        const otherSentences = v.sentences.filter((_, i) => i !== sentenceIdx);
+        const exampleSentence = otherSentences.length > 0
+            ? otherSentences[Math.floor(Math.random() * otherSentences.length)]
+            : v.sentences[sentenceIdx];
+
+        return {
+            word: v.word,
+            answer: v.word,
+            sentence: v.sentences[sentenceIdx],
+            options: v.options,
+            meaning: v.meaning,
+            example: exampleSentence.replace("{blank}", v.word),
+            category: v.category,
+            pos: v.pos,
+            level: v.level
+        };
+    });
+}
+
+// ============================
+// START QUIZ
+// ============================
+function startQuiz() {
+    const pool = buildQuizPool();
+    currentQuestions = shuffle(pool).slice(0, quizSize);
+    currentIndex = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    answered = false;
+    reviewLog = [];
+
+    document.getElementById("resultsCard").style.display = "none";
+    document.getElementById("quizCard").style.display = "block";
+
+    updateScore();
+    showQuestion();
+}
+
+// ============================
+// SHOW QUESTION
+// ============================
+function buildSentenceHTML(template) {
+    return template.replace("{blank}", '<span class="blank" id="blankSpan">______</span>');
+}
+
+function showQuestion() {
+    answered = false;
+    const q = currentQuestions[currentIndex];
+
+    // Category tag with level + type badge
+    const score = getScore(q.word);
+    let badgeHTML = "";
+
+    const posLabels = {"noun":"N","verb":"V","adjective":"ADJ","adverb":"ADV"};
+    badgeHTML += `<span class="type-badge">${posLabels[q.pos] || q.pos}</span>`;
+
+    if (q.level) {
+        const levelLabels = {elementary:"ELEM",middle:"MID",high:"HIGH",college:"COLLEGE",professional:"PRO"};
+        badgeHTML += `<span class="level-badge ${q.level}">${levelLabels[q.level] || q.level}</span>`;
+    }
+    if (score < 0) {
+        badgeHTML += `<span class="phrase-score-badge negative">score: ${score}</span>`;
+    } else if (score > 0) {
+        badgeHTML += `<span class="phrase-score-badge positive">score: +${score}</span>`;
+    }
+    document.getElementById("categoryTag").innerHTML = q.category + badgeHTML;
+
+    document.getElementById("sentenceDisplay").innerHTML = buildSentenceHTML(q.sentence);
+    document.getElementById("feedback").className = "feedback";
+    document.getElementById("feedback").style.display = "none";
+    document.getElementById("nextBtn").style.display = "none";
+    document.getElementById("scoreChange").innerHTML = "";
+
+    const container = document.getElementById("optionsContainer");
+    container.innerHTML = "";
+
+    const shuffledOptions = shuffle(q.options);
+    shuffledOptions.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.textContent = opt;
+        btn.onclick = () => selectAnswer(opt, btn);
+        container.appendChild(btn);
+    });
+
+    updateScore();
+}
+
+// ============================
+// SELECT ANSWER
+// ============================
+function selectAnswer(selected, btn) {
+    if (answered) return;
+    answered = true;
+
+    const q = currentQuestions[currentIndex];
+    const isCorrect = selected === q.answer;
+    const blank = document.getElementById("blankSpan");
+    const feedback = document.getElementById("feedback");
+
+    document.querySelectorAll(".option-btn").forEach(b => b.disabled = true);
+
+    // Record score
+    const oldScore = getScore(q.word);
+    const newScore = recordAnswer(q.word, isCorrect);
+    const delta = newScore - oldScore;
+
+    // Remove old h3 if exists
+    const oldH3 = feedback.querySelector("h3");
+    if (oldH3) oldH3.remove();
+
+    const h3 = document.createElement("h3");
+
+    if (isCorrect) {
+        correctCount++;
+        btn.classList.add("selected-correct");
+        blank.textContent = selected;
+        blank.classList.add("filled");
+        feedback.className = "feedback correct";
+        h3.textContent = "Correct!";
+        h3.style.color = "#4caf50";
+    } else {
+        wrongCount++;
+        btn.classList.add("selected-wrong");
+        blank.textContent = q.answer;
+        blank.classList.add("wrong-fill");
+        feedback.className = "feedback wrong";
+        h3.innerHTML = `Wrong! The answer is "<strong>${q.answer}</strong>"`;
+        h3.style.color = "#f44336";
+
+        document.querySelectorAll(".option-btn").forEach(b => {
+            if (b.textContent === q.answer) b.classList.add("highlight-correct");
+        });
+    }
+
+    feedback.prepend(h3);
+    document.getElementById("phraseTitle").textContent = q.word;
+    document.getElementById("phraseMeaning").textContent = q.meaning;
+    document.getElementById("phraseExample").textContent = `Example: "${q.example}"`;
+
+    // Show score change
+    const scoreChangeEl = document.getElementById("scoreChange");
+    if (delta !== 0) {
+        const cls = delta < 0 ? "delta-neg" : "delta-pos";
+        const sign = delta > 0 ? "+" : "";
+        scoreChangeEl.innerHTML = `Word score: ${newScore} (<span class="${cls}">${sign}${delta}</span>)`;
+    } else if (isCorrect && oldScore >= 0) {
+        scoreChangeEl.innerHTML = `Word score: ${newScore} <span style="color:#666">(already mastered)</span>`;
+    }
+    feedback.style.display = "block";
+
+    reviewLog.push({
+        word: q.word,
+        correct: isCorrect,
+        yourAnswer: selected,
+        sentence: q.sentence.replace("{blank}", q.answer),
+        newScore: newScore,
+        delta: delta
+    });
+
+    document.getElementById("nextBtn").style.display = "inline-block";
+    document.getElementById("nextBtn").textContent =
+        currentIndex < currentQuestions.length - 1 ? "Next Question" : "See Results";
+
+    updateScore();
+    updateWeakCount();
+}
+
+// ============================
+// NEXT / RESULTS
+// ============================
+function nextQuestion() {
+    currentIndex++;
+    if (currentIndex >= currentQuestions.length) {
+        showResults();
+    } else {
+        showQuestion();
+    }
+}
+
+function showResults() {
+    document.getElementById("quizCard").style.display = "none";
+    const resultsCard = document.getElementById("resultsCard");
+    resultsCard.style.display = "block";
+
+    const pct = Math.round((correctCount / currentQuestions.length) * 100);
+    let grade = "";
+    if (pct >= 90) grade = "Amazing! You're a vocabulary master!";
+    else if (pct >= 70) grade = "Great job! Keep practicing!";
+    else if (pct >= 50) grade = "Good effort! Review the ones you missed.";
+    else grade = "Keep studying! You'll improve with practice.";
+
+    document.getElementById("resultsStats").innerHTML = `
+        <p>Score: <strong>${correctCount} / ${currentQuestions.length}</strong> (${pct}%)</p>
+        <p style="margin-top:10px; color: #14b8a6;">${grade}</p>
+    `;
+
+    // History summary — show weak words
+    const weak = getWeakPhrases();
+    const summaryDiv = document.getElementById("historySummary");
+    if (weak.length > 0) {
+        const top = weak.slice(0, 20);
+        summaryDiv.innerHTML = `
+            <h4>Your ${weak.length} Weakest Word${weak.length > 1 ? "s" : ""} (All Time)</h4>
+            <div class="weak-phrase-list">
+                ${top.map(([word, score]) =>
+                    `<span class="weak-phrase-item">${word} <span class="wps">${score}</span></span>`
+                ).join("")}
+            </div>
+            ${weak.length > 20 ? `<div style="color:#666; font-size:0.7rem; margin-top:6px;">...and ${weak.length - 20} more</div>` : ""}
+        `;
+        summaryDiv.style.display = "block";
+    } else {
+        summaryDiv.innerHTML = `<h4 style="color:#4caf50;">No weak words! Great job!</h4>`;
+        summaryDiv.style.display = "block";
+    }
+
+    // Build review list
+    const reviewDiv = document.getElementById("reviewSection");
+    reviewDiv.innerHTML = "<h3 style='margin-bottom:12px; color:#aaa;'>Review:</h3>";
+    reviewLog.forEach(r => {
+        const div = document.createElement("div");
+        div.className = `review-item ${r.correct ? "was-correct" : "was-wrong"}`;
+        const scoreColor = r.newScore < 0 ? "#f44336" : r.newScore > 0 ? "#4caf50" : "#888";
+        const deltaStr = r.delta !== 0
+            ? `(${r.delta > 0 ? "+" : ""}${r.delta})`
+            : "";
+        div.innerHTML = `
+            <span class="ri-phrase">${r.word}</span>
+            ${r.correct ? "&#10003;" : `&#10007; (you picked: ${r.yourAnswer})`}
+            <span class="ri-score" style="color:${scoreColor}">[ ${r.newScore} ${deltaStr}]</span>
+            <div class="ri-sentence">${r.sentence}</div>
+        `;
+        reviewDiv.appendChild(div);
+    });
+
+    // Update weak panel if visible
+    if (selectedMode === "weak") renderWeakPanel();
+}
+
+function restartQuiz() {
+    startQuiz();
+}
+
+function updateScore() {
+    document.getElementById("correctCount").textContent = `Correct: ${correctCount}`;
+    document.getElementById("wrongCount").textContent = `Wrong: ${wrongCount}`;
+    document.getElementById("questionNum").textContent = `${currentIndex + 1} / ${currentQuestions.length}`;
+    document.getElementById("progressFill").style.width =
+        `${(currentIndex / currentQuestions.length) * 100}%`;
+}
+
+// ============================
+// BY LEVEL
+// ============================
+function initLevelChips() {
+    document.querySelectorAll(".level-chip").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".level-chip").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            selectedLevel = btn.dataset.level;
+            startQuiz();
+        });
+    });
+    updateLevelCounts();
+}
+
+function updateLevelCounts() {
+    const counts = {elementary:0, middle:0, high:0, college:0, professional:0};
+    VOCABULARY.forEach(v => { if (counts[v.level] !== undefined) counts[v.level]++; });
+    document.getElementById("countElementary").textContent = ` (${counts.elementary})`;
+    document.getElementById("countMiddle").textContent = ` (${counts.middle})`;
+    document.getElementById("countHigh").textContent = ` (${counts.high})`;
+    document.getElementById("countCollege").textContent = ` (${counts.college})`;
+    document.getElementById("countProfessional").textContent = ` (${counts.professional})`;
+}
+
+// ============================
+// QUIZ SIZE BUTTONS
+// ============================
+document.querySelectorAll(".size-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        quizSize = parseInt(btn.dataset.size);
+        startQuiz();
+    });
+});
+
+// ============================
+// INIT
+// ============================
+countStats();
+initMotherTabs();
+initTypeChips();
+initTopicChips();
+initLevelChips();
+startQuiz();
+</script>
+
+</body>
+</html>
