@@ -2396,7 +2396,7 @@ const VOCABULARY = [
             "procurement",
             "pronouncement",
             "predicament",
-            "procurement"
+            "procrastination"
         ]
     },
 
@@ -3115,7 +3115,7 @@ const VOCABULARY = [
         options: [
             "vaccine",
             "vaccinate",
-            "vaccine",
+            "vacancy",
             "vaseline"
         ]
     },
@@ -3614,7 +3614,7 @@ const VOCABULARY = [
         ],
         options: [
             "subpoena",
-            "subpoena",
+            "subsidy",
             "supernova",
             "subordinate"
         ]
@@ -4795,7 +4795,7 @@ const VOCABULARY = [
         options: [
             "insinuate",
             "instigate",
-            "insinuate",
+            "insulate",
             "intimidate"
         ]
     },
@@ -6914,7 +6914,7 @@ const VOCABULARY = [
         ],
         options: [
             "wistfulness",
-            "wistfulness",
+            "wastefulness",
             "willfulness",
             "weariness"
         ]
@@ -7215,7 +7215,7 @@ const VOCABULARY = [
         options: [
             "awe",
             "owe",
-            "awe",
+            "ewe",
             "awl"
         ]
     },
@@ -8775,7 +8775,7 @@ const VOCABULARY = [
         options: [
             "mandate",
             "mantle",
-            "mandate",
+            "manifest",
             "magnate"
         ]
     },
@@ -11356,7 +11356,7 @@ const VOCABULARY = [
             "spurious",
             "curious",
             "furious",
-            "spurious"
+            "serious"
         ]
     },
 
@@ -11534,7 +11534,7 @@ const VOCABULARY = [
         ],
         options: [
             "ominous",
-            "ominous",
+            "omnivorous",
             "luminous",
             "voluminous"
         ]
@@ -14554,7 +14554,7 @@ const VOCABULARY = [
         ],
         options: [
             "dilatory",
-            "dilatory",
+            "dietary",
             "depilatory",
             "laudatory"
         ]
@@ -14894,7 +14894,7 @@ const VOCABULARY = [
         ],
         options: [
             "cogitate",
-            "cogitate",
+            "cohabit",
             "coagulate",
             "conjugate"
         ]
@@ -15375,7 +15375,7 @@ const VOCABULARY = [
         options: [
             "lacuna",
             "laguna",
-            "lacuna",
+            "lagoon",
             "luna"
         ]
     },
@@ -15774,7 +15774,7 @@ const VOCABULARY = [
         ],
         options: [
             "ignominy",
-            "ignominy",
+            "ignorance",
             "infamy",
             "insomnia"
         ]
@@ -15815,7 +15815,7 @@ const VOCABULARY = [
         options: [
             "contrite",
             "contrived",
-            "contrite",
+            "contrary",
             "concrete"
         ]
     },
@@ -16756,7 +16756,7 @@ const VOCABULARY = [
             "engender",
             "endanger",
             "surrender",
-            "surrender"
+            "engineer"
         ]
     },
 
@@ -23516,7 +23516,7 @@ const VOCABULARY = [
             "paramount",
             "tantamount",
             "surmount",
-            "paramount"
+            "paramedic"
         ]
     },
 
@@ -24714,7 +24714,7 @@ const VOCABULARY = [
         ],
         options: [
             "equitable",
-            "equitable",
+            "equable",
             "inevitable",
             "hospitable"
         ]
@@ -27614,7 +27614,7 @@ const VOCABULARY = [
         ],
         options: [
             "aplomb",
-            "aplomb",
+            "applause",
             "alarm",
             "album"
         ]
@@ -27643,7 +27643,7 @@ const VOCABULARY = [
     {
         word: "inculcate",
         pos: "verb",
-        category: "education",
+        category: "academic",
         level: "professional",
         meaning: "To instill an attitude, idea, or habit by persistent instruction.",
         sentences: [
@@ -27695,7 +27695,7 @@ const VOCABULARY = [
         options: [
             "subterfuge",
             "subterranean",
-            "subterfuge",
+            "subtitle",
             "subtlety"
         ]
     },
@@ -28954,9 +28954,9 @@ const VOCABULARY = [
         ],
         options: [
             "lament",
-            "lament",
-            "lament",
-            "lament"
+            "cement",
+            "ferment",
+            "augment"
         ]
     },
 
@@ -29274,7 +29274,7 @@ const VOCABULARY = [
         ],
         options: [
             "aftermath",
-            "aftermath",
+            "afterglow",
             "afterthought",
             "afterlife"
         ]
@@ -31343,7 +31343,7 @@ const VOCABULARY = [
     {
         word: "immerse",
         pos: "verb",
-        category: "education",
+        category: "academic",
         level: "middle",
         meaning: "To involve oneself deeply in a particular activity or interest.",
         sentences: [
@@ -31935,7 +31935,7 @@ const VOCABULARY = [
         options: [
             "plight",
             "flight",
-            "plight",
+            "blight",
             "light"
         ]
     },
@@ -32054,7 +32054,7 @@ const VOCABULARY = [
         ],
         options: [
             "realm",
-            "realm",
+            "reality",
             "real",
             "rule"
         ]
@@ -33043,7 +33043,7 @@ const VOCABULARY = [
     {
         word: "cultivate",
         pos: "verb",
-        category: "education",
+        category: "academic",
         level: "high",
         meaning: "To develop or improve by education or training.",
         sentences: [
@@ -33103,7 +33103,7 @@ const VOCABULARY = [
     {
         word: "abstinence",
         pos: "noun",
-        category: "health",
+        category: "medicine",
         level: "high",
         meaning: "The practice of restraining oneself from indulging in something.",
         sentences: [
@@ -33175,7 +33175,7 @@ const VOCABULARY = [
         options: [
             "advent",
             "advance",
-            "advent",
+            "adverb",
             "advice"
         ]
     },
@@ -34603,7 +34603,7 @@ const VOCABULARY = [
     {
         word: "emulate",
         pos: "verb",
-        category: "education",
+        category: "academic",
         level: "high",
         meaning: "To match or surpass by imitation.",
         sentences: [
@@ -35534,7 +35534,7 @@ const VOCABULARY = [
         ],
         options: [
             "induce",
-            "induce",
+            "deduce",
             "reduce",
             "produce"
         ]
@@ -37123,7 +37123,7 @@ const VOCABULARY = [
     {
         word: "litigate",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "high",
         meaning: "To take a dispute to a court of law.",
         sentences: [
@@ -37323,7 +37323,7 @@ const VOCABULARY = [
     {
         word: "unscrupulous",
         pos: "adjective",
-        category: "legal",
+        category: "law",
         level: "high",
         meaning: "Having or showing no moral principles; dishonest.",
         sentences: [
@@ -37363,7 +37363,7 @@ const VOCABULARY = [
     {
         word: "heinous",
         pos: "adjective",
-        category: "legal",
+        category: "law",
         level: "high",
         meaning: "Utterly wicked or shockingly evil.",
         sentences: [
@@ -37743,7 +37743,7 @@ const VOCABULARY = [
     {
         word: "lampoon",
         pos: "verb",
-        category: "culture",
+        category: "social",
         level: "college",
         meaning: "To publicly criticize someone or something by using ridicule or satire.",
         sentences: [
@@ -37783,7 +37783,7 @@ const VOCABULARY = [
     {
         word: "ornate",
         pos: "adjective",
-        category: "culture",
+        category: "social",
         level: "high",
         meaning: "Made in an intricate shape or decorated with complex patterns.",
         sentences: [
@@ -37923,7 +37923,7 @@ const VOCABULARY = [
     {
         word: "impeach",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "high",
         meaning: "To charge a public official with misconduct in office.",
         sentences: [
@@ -38023,7 +38023,7 @@ const VOCABULARY = [
     {
         word: "grotesque",
         pos: "adjective",
-        category: "culture",
+        category: "social",
         level: "high",
         meaning: "Comically or repulsively ugly or distorted.",
         sentences: [
@@ -38296,7 +38296,7 @@ const VOCABULARY = [
             "lapse",
             "lease",
             "lance",
-            "lapse"
+            "lapel"
         ]
     },
 
@@ -38503,7 +38503,7 @@ const VOCABULARY = [
     {
         word: "rebuttal",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "high",
         meaning: "An instance of disproving or contradicting something.",
         sentences: [
@@ -38583,7 +38583,7 @@ const VOCABULARY = [
     {
         word: "malpractice",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "high",
         meaning: "Improper, illegal, or negligent professional activity or treatment.",
         sentences: [
@@ -38654,7 +38654,7 @@ const VOCABULARY = [
         ],
         options: [
             "rampant",
-            "rampant",
+            "rampart",
             "radiant",
             "remnant"
         ]
@@ -38703,7 +38703,7 @@ const VOCABULARY = [
     {
         word: "waive",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "high",
         meaning: "To refrain from insisting on or using a right or claim.",
         sentences: [
@@ -38723,7 +38723,7 @@ const VOCABULARY = [
     {
         word: "flout",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "college",
         meaning: "To openly disregard a rule, law, or convention.",
         sentences: [
@@ -38854,7 +38854,7 @@ const VOCABULARY = [
         ],
         options: [
             "frenzy",
-            "frenzy",
+            "friction",
             "frenetic",
             "frozen"
         ]
@@ -38923,7 +38923,7 @@ const VOCABULARY = [
     {
         word: "arbiter",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "college",
         meaning: "A person who settles a dispute or has ultimate authority in a matter.",
         sentences: [
@@ -39043,7 +39043,7 @@ const VOCABULARY = [
     {
         word: "dirge",
         pos: "noun",
-        category: "culture",
+        category: "social",
         level: "college",
         meaning: "A lament for the dead; a mournful song or piece of music.",
         sentences: [
@@ -39063,7 +39063,7 @@ const VOCABULARY = [
     {
         word: "divulge",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "high",
         meaning: "To make known private or sensitive information.",
         sentences: [
@@ -39123,7 +39123,7 @@ const VOCABULARY = [
     {
         word: "encroach",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "college",
         meaning: "To intrude on a person's territory or rights gradually.",
         sentences: [
@@ -39315,7 +39315,7 @@ const VOCABULARY = [
         options: [
             "jest",
             "gist",
-            "jest",
+            "zest",
             "just"
         ]
     },
@@ -39403,7 +39403,7 @@ const VOCABULARY = [
     {
         word: "milieu",
         pos: "noun",
-        category: "culture",
+        category: "social",
         level: "college",
         meaning: "A person's social environment; a setting.",
         sentences: [
@@ -39443,7 +39443,7 @@ const VOCABULARY = [
     {
         word: "onus",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "college",
         meaning: "The burden of proof or responsibility.",
         sentences: [
@@ -39503,7 +39503,7 @@ const VOCABULARY = [
     {
         word: "reprieve",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "college",
         meaning: "A temporary relief from harm or discomfort.",
         sentences: [
@@ -39523,7 +39523,7 @@ const VOCABULARY = [
     {
         word: "riveting",
         pos: "adjective",
-        category: "culture",
+        category: "social",
         level: "high",
         meaning: "Completely engrossing; compelling.",
         sentences: [
@@ -39794,8 +39794,8 @@ const VOCABULARY = [
         ],
         options: [
             "vanguard",
+            "vagrant",
             "veteran",
-            "vanguard",
             "venture"
         ]
     },
@@ -39843,7 +39843,7 @@ const VOCABULARY = [
     {
         word: "ailment",
         pos: "noun",
-        category: "medical",
+        category: "medicine",
         level: "middle",
         meaning: "An illness, typically a minor one.",
         sentences: [
@@ -39854,7 +39854,7 @@ const VOCABULARY = [
         ],
         options: [
             "ailment",
-            "ailment",
+            "element",
             "alignment",
             "attainment"
         ]
@@ -40623,7 +40623,7 @@ const VOCABULARY = [
     {
         word: "restrict",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "middle",
         meaning: "To put a limit on; to keep under control.",
         sentences: [
@@ -40763,7 +40763,7 @@ const VOCABULARY = [
     {
         word: "tradition",
         pos: "noun",
-        category: "culture",
+        category: "social",
         level: "elementary",
         meaning: "A custom or belief passed down through generations.",
         sentences: [
@@ -41067,7 +41067,7 @@ const VOCABULARY = [
             "She applied for a {blank} to fund her doctoral studies.",
             "The {blank} was awarded to the team with the best proposal."
         ],
-        options: ["grant","grant","guard","grasp"]
+        options: ["grant", "grain", "guard", "grasp"]
     },
 
     {
@@ -41268,7 +41268,7 @@ const VOCABULARY = [
     {
         word: "notwithstanding",
         pos: "adverb",
-        category: "legal",
+        category: "law",
         level: "college",
         meaning: "In spite of; despite.",
         sentences: [
@@ -41358,7 +41358,7 @@ const VOCABULARY = [
     {
         word: "diagnose",
         pos: "verb",
-        category: "medical",
+        category: "medicine",
         level: "middle",
         meaning: "To identify the nature of an illness or problem by examination.",
         sentences: [
@@ -41373,7 +41373,7 @@ const VOCABULARY = [
     {
         word: "symptom",
         pos: "noun",
-        category: "medical",
+        category: "medicine",
         level: "middle",
         meaning: "A physical or mental feature indicating a condition; a sign of something.",
         sentences: [
@@ -41388,7 +41388,7 @@ const VOCABULARY = [
     {
         word: "therapy",
         pos: "noun",
-        category: "medical",
+        category: "medicine",
         level: "middle",
         meaning: "Treatment intended to relieve or heal a disorder.",
         sentences: [
@@ -41403,7 +41403,7 @@ const VOCABULARY = [
     {
         word: "dose",
         pos: "noun",
-        category: "medical",
+        category: "medicine",
         level: "elementary",
         meaning: "A quantity of a medicine or drug taken at one time.",
         sentences: [
@@ -41418,7 +41418,7 @@ const VOCABULARY = [
     {
         word: "immune",
         pos: "adjective",
-        category: "medical",
+        category: "medicine",
         level: "middle",
         meaning: "Resistant to a particular infection; protected from something.",
         sentences: [
@@ -41433,7 +41433,7 @@ const VOCABULARY = [
     {
         word: "prescribe",
         pos: "verb",
-        category: "medical",
+        category: "medicine",
         level: "middle",
         meaning: "To authorize the use of medicine; to recommend with authority.",
         sentences: [
@@ -41508,7 +41508,7 @@ const VOCABULARY = [
     {
         word: "civil",
         pos: "adjective",
-        category: "legal",
+        category: "law",
         level: "middle",
         meaning: "Relating to citizens or the state; courteous and polite.",
         sentences: [
@@ -41538,7 +41538,7 @@ const VOCABULARY = [
     {
         word: "consent",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "middle",
         meaning: "Permission for something to happen or agreement to do something.",
         sentences: [
@@ -41703,7 +41703,7 @@ const VOCABULARY = [
     {
         word: "deny",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "elementary",
         meaning: "To state that something is not true; to refuse to give.",
         sentences: [
@@ -41958,7 +41958,7 @@ const VOCABULARY = [
     {
         word: "federal",
         pos: "adjective",
-        category: "legal",
+        category: "law",
         level: "middle",
         meaning: "Relating to a system of government with a central authority and regional units.",
         sentences: [
@@ -42258,7 +42258,7 @@ const VOCABULARY = [
     {
         word: "legislate",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "high",
         meaning: "To make or enact laws.",
         sentences: [
@@ -42273,7 +42273,7 @@ const VOCABULARY = [
     {
         word: "license",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "elementary",
         meaning: "A permit or official document giving authorization.",
         sentences: [
@@ -42408,7 +42408,7 @@ const VOCABULARY = [
     {
         word: "motive",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "middle",
         meaning: "A reason for doing something, especially one that is hidden.",
         sentences: [
@@ -42483,7 +42483,7 @@ const VOCABULARY = [
     {
         word: "behalf",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "middle",
         meaning: "In the interest of; as a representative of.",
         sentences: [
@@ -42783,7 +42783,7 @@ const VOCABULARY = [
     {
         word: "policy",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "middle",
         meaning: "A course or principle of action adopted or proposed.",
         sentences: [
@@ -43203,7 +43203,7 @@ const VOCABULARY = [
     {
         word: "stress",
         pos: "noun",
-        category: "medical",
+        category: "medicine",
         level: "elementary",
         meaning: "A state of mental or emotional strain; emphasis given to a word or point.",
         sentences: [
@@ -43263,7 +43263,7 @@ const VOCABULARY = [
     {
         word: "suspend",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "middle",
         meaning: "To temporarily prevent from continuing; to hang from above.",
         sentences: [
@@ -43683,7 +43683,7 @@ const VOCABULARY = [
     {
         word: "practitioner",
         pos: "noun",
-        category: "medical",
+        category: "medicine",
         level: "high",
         meaning: "A person actively engaged in a profession, especially medicine or law.",
         sentences: [
@@ -43698,7 +43698,7 @@ const VOCABULARY = [
     {
         word: "presume",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "high",
         meaning: "To suppose something is the case based on probability; to take for granted.",
         sentences: [
@@ -43983,7 +43983,7 @@ const VOCABULARY = [
     {
         word: "style",
         pos: "noun",
-        category: "culture",
+        category: "social",
         level: "elementary",
         meaning: "A manner of doing something; a distinctive appearance.",
         sentences: [
@@ -44373,7 +44373,7 @@ const VOCABULARY = [
     {
         word: "authority",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "middle",
         meaning: "The power or right to give orders or make decisions; an expert.",
         sentences: [
@@ -44568,7 +44568,7 @@ const VOCABULARY = [
     {
         word: "contract",
         pos: "noun",
-        category: "legal",
+        category: "law",
         level: "elementary",
         meaning: "A written or spoken agreement intended to be enforceable by law.",
         sentences: [
@@ -44838,7 +44838,7 @@ const VOCABULARY = [
     {
         word: "legal",
         pos: "adjective",
-        category: "legal",
+        category: "law",
         level: "elementary",
         meaning: "Relating to or permitted by law.",
         sentences: [
@@ -44928,7 +44928,7 @@ const VOCABULARY = [
     {
         word: "permit",
         pos: "verb",
-        category: "legal",
+        category: "law",
         level: "middle",
         meaning: "To give authorization or consent for something.",
         sentences: [
@@ -45168,7 +45168,7 @@ const VOCABULARY = [
     {
         word: "culture",
         pos: "noun",
-        category: "culture",
+        category: "social",
         level: "elementary",
         meaning: "The customs, arts, and social institutions of a particular group.",
         sentences: [

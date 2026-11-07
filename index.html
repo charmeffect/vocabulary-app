@@ -657,22 +657,7 @@
     <div class="sub-panel-label">Choose a category</div>
     <div class="topic-chips" id="topicChips">
         <button class="topic-chip active" data-topic="all">All Categories</button>
-        <button class="topic-chip" data-topic="academic">Academic</button>
-        <button class="topic-chip" data-topic="business">Business</button>
-        <button class="topic-chip" data-topic="science">Science</button>
-        <button class="topic-chip" data-topic="technology">Technology</button>
-        <button class="topic-chip" data-topic="law">Law</button>
-        <button class="topic-chip" data-topic="medicine">Medicine</button>
-        <button class="topic-chip" data-topic="psychology">Psychology</button>
-        <button class="topic-chip" data-topic="politics">Politics</button>
-        <button class="topic-chip" data-topic="arts">Arts</button>
-        <button class="topic-chip" data-topic="philosophy">Philosophy</button>
-        <button class="topic-chip" data-topic="social">Social</button>
-        <button class="topic-chip" data-topic="emotion">Emotion</button>
-        <button class="topic-chip" data-topic="character">Character</button>
-        <button class="topic-chip" data-topic="communication">Communication</button>
-        <button class="topic-chip" data-topic="nature">Nature</button>
-        <button class="topic-chip" data-topic="daily">Daily</button>
+        <!-- category chips are generated from VOCABULARY data (see renderTopicChips) -->
     </div>
 </div>
 
@@ -840,7 +825,6 @@ function initMotherTabs() {
             if (selectedMode === "topic") {
                 document.querySelectorAll(".topic-chip").forEach(b => b.classList.remove("active"));
                 document.querySelector('.topic-chip[data-topic="all"]').classList.add("active");
-                updateTopicCounts();
             }
 
             startQuiz();
@@ -878,7 +862,30 @@ function updateTypeCounts() {
 // ============================
 // BY CATEGORY (Topic)
 // ============================
+const TOPIC_LABELS = {
+    academic: "Academic", business: "Business", science: "Science", technology: "Technology",
+    law: "Law", medicine: "Medicine", psychology: "Psychology", politics: "Politics", arts: "Arts",
+    philosophy: "Philosophy", social: "Social", emotion: "Emotion", character: "Character",
+    communication: "Communication", nature: "Nature", daily: "Daily", general: "General"
+};
+
+// Build one chip per category that actually exists in the data, ordered by item count.
+function renderTopicChips() {
+    const container = document.getElementById("topicChips");
+    const counts = {};
+    VOCABULARY.forEach(v => { counts[v.category] = (counts[v.category] || 0) + 1; });
+    Object.keys(counts).sort((a, b) => counts[b] - counts[a]).forEach(t => {
+        const btn = document.createElement("button");
+        btn.className = "topic-chip";
+        btn.dataset.topic = t;
+        const label = TOPIC_LABELS[t] || (t.charAt(0).toUpperCase() + t.slice(1));
+        btn.textContent = `${label} (${counts[t]})`;
+        container.appendChild(btn);
+    });
+}
+
 function initTopicChips() {
+    renderTopicChips();
     document.querySelectorAll(".topic-chip").forEach(btn => {
         btn.addEventListener("click", () => {
             document.querySelectorAll(".topic-chip").forEach(b => b.classList.remove("active"));
@@ -886,19 +893,6 @@ function initTopicChips() {
             selectedTopic = btn.dataset.topic;
             startQuiz();
         });
-    });
-    updateTopicCounts();
-}
-
-function updateTopicCounts() {
-    const topics = ["academic", "business", "science", "technology", "law", "medicine", "psychology", "politics", "arts", "philosophy", "social", "emotion", "character", "communication", "nature", "daily"];
-    topics.forEach(t => {
-        const count = VOCABULARY.filter(v => v.category === t).length;
-        const chip = document.querySelector(`.topic-chip[data-topic="${t}"]`);
-        if (chip) {
-            const label = chip.textContent.replace(/\s*\(\d+\)/, "");
-            chip.textContent = `${label} (${count})`;
-        }
     });
 }
 
@@ -973,7 +967,7 @@ function buildQuizPool() {
 
         return {
             word: v.word,
-            answer: v.word,
+            answer: v.options[0],
             sentence: v.sentences[sentenceIdx],
             options: v.options,
             meaning: v.meaning,
